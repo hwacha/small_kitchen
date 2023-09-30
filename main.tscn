@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://ba5ndpgaao44s"]
+[gd_scene load_steps=43 format=3 uid="uid://ba5ndpgaao44s"]
 
 [ext_resource type="Texture2D" uid="uid://8f67357ai5r4" path="res://assets/interior_32x.png" id="1_a7l0v"]
 [ext_resource type="Script" path="res://Player.gd" id="2_gynq6"]
@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://dctvmmexmi6dw" path="res://assets/male-walking-left.png" id="4_vfy3r"]
 [ext_resource type="Texture2D" uid="uid://del3mif205hfo" path="res://assets/male-walking-right.png" id="5_gtbrw"]
 [ext_resource type="Texture2D" uid="uid://d35scslrwbei3" path="res://assets/male-walking-back.png" id="6_xrix0"]
+[ext_resource type="PackedScene" uid="uid://cb883jrptn8au" path="res://furniture/Bed.tscn" id="7_4qovr"]
+[ext_resource type="PackedScene" uid="uid://b05ip1cujx0d5" path="res://furniture/Microwave.tscn" id="7_y8h8k"]
+[ext_resource type="Texture2D" uid="uid://y45tvox5s53d" path="res://assets/back12.png" id="9_arj13"]
+[ext_resource type="Texture2D" uid="uid://cdqu3vn3al7mq" path="res://assets/back1.png" id="10_psn8r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_moawy"]
 texture = ExtResource("1_a7l0v")
@@ -328,6 +332,25 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_og2dk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_arj13")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_psn8r")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
+
 [node name="Node2D" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -341,14 +364,18 @@ layer_1/modulate = Color(1, 1, 1, 1)
 layer_1/y_sort_enabled = false
 layer_1/y_sort_origin = 0
 layer_1/z_index = 0
-layer_1/tile_data = PackedInt32Array(524288, 0, 14, 8, 131072, 12, 524297, 262144, 14, 12, 131072, 12, 65536, 0, 14, 131072, 0, 14, 196608, 0, 14, 262144, 0, 14, 327680, 0, 14, 393216, 0, 14, 458752, 0, 14, 1, 131072, 12, 589825, 131072, 16, 2, 131072, 12, 589826, 131072, 16, 3, 131072, 12, 589827, 131072, 16, 4, 131072, 12, 589828, 131072, 16, 5, 131072, 12, 589829, 131072, 16, 6, 131072, 12, 589830, 131072, 16, 7, 131072, 12, 589831, 131072, 16, 589832, 131072, 16, 65545, 262144, 14, 131081, 262144, 14, 393225, 196608, 15, 458761, 262144, 14, 11, 131072, 12, 589835, 131072, 16, 589836, 131072, 16, 0, 65536, 12, 589824, 65536, 16, 196617, 196608, 13, 196618, 65536, 13, 131082, 0, 14, 65546, 0, 14, 458762, 0, 14, 524298, 0, 14, 393226, 65536, 15, 15, 196608, 12, 65551, 262144, 14, 131087, 262144, 14, 196623, 262144, 14, 262159, 262144, 14, 327695, 262144, 14, 393231, 262144, 14, 458767, 262144, 14, 524303, 262144, 14, 589839, 196608, 16, 13, 131072, 12, 14, 131072, 12, 589837, 131072, 16, 589838, 131072, 16, 589833, 196608, 16, 9, 196608, 12, 10, 65536, 12, 589834, 65536, 16, 65547, 1769472, 2)
-layer_2/name = "furniture"
-layer_2/enabled = true
-layer_2/modulate = Color(1, 1, 1, 1)
-layer_2/y_sort_enabled = false
-layer_2/y_sort_origin = 0
-layer_2/z_index = 0
-layer_2/tile_data = PackedInt32Array(131076, 1638400, 6, 131075, 1638400, 6, 131085, 1245184, 10)
+layer_1/tile_data = PackedInt32Array(524288, 0, 14, 8, 131072, 12, 524297, 262144, 14, 12, 131072, 12, 65536, 0, 14, 131072, 0, 14, 196608, 0, 14, 262144, 0, 14, 327680, 0, 14, 393216, 0, 14, 458752, 0, 14, 1, 131072, 12, 589825, 131072, 16, 2, 131072, 12, 589826, 131072, 16, 3, 131072, 12, 589827, 131072, 16, 4, 131072, 12, 589828, 131072, 16, 5, 131072, 12, 589829, 131072, 16, 6, 131072, 12, 589830, 131072, 16, 7, 131072, 12, 589831, 131072, 16, 589832, 131072, 16, 65545, 262144, 14, 131081, 262144, 14, 393225, 196608, 15, 458761, 262144, 14, 11, 131072, 12, 589835, 131072, 16, 589836, 131072, 16, 0, 65536, 12, 589824, 65536, 16, 196617, 196608, 13, 196618, 65536, 13, 131082, 0, 14, 65546, 0, 14, 458762, 0, 14, 524298, 0, 14, 393226, 65536, 15, 15, 196608, 12, 65551, 262144, 14, 131087, 262144, 14, 196623, 262144, 14, 262159, 262144, 14, 327695, 262144, 14, 393231, 262144, 14, 458767, 262144, 14, 524303, 262144, 14, 589839, 196608, 16, 13, 131072, 12, 14, 131072, 12, 589837, 131072, 16, 589838, 131072, 16, 589833, 196608, 16, 9, 196608, 12, 10, 65536, 12, 589834, 65536, 16)
+
+[node name="Furniture" type="Node2D" parent="."]
+
+[node name="Bed" parent="Furniture" instance=ExtResource("7_4qovr")]
+position = Vector2(432, 80)
+
+[node name="Microwave" parent="Furniture" instance=ExtResource("7_y8h8k")]
+position = Vector2(208, 80)
+
+[node name="Microwave2" parent="Furniture" instance=ExtResource("7_y8h8k")]
+position = Vector2(176, 80)
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(400, 80)
@@ -359,14 +386,37 @@ metadata/_edit_group_ = true
 sprite_frames = SubResource("SpriteFrames_hv6pm")
 animation = &"walk_up"
 
-[node name="RayUp" type="RayCast2D" parent="Player"]
-target_position = Vector2(2.08165e-12, -32)
+[node name="Rays" type="Node2D" parent="Player"]
 
-[node name="RayDown" type="RayCast2D" parent="Player"]
-target_position = Vector2(2.08165e-12, 32)
+[node name="Up" type="Node2D" parent="Player/Rays"]
 
-[node name="RayLeft" type="RayCast2D" parent="Player"]
-target_position = Vector2(-32, 2.08165e-12)
+[node name="RayUp" type="RayCast2D" parent="Player/Rays/Up"]
+position = Vector2(0, -12)
+target_position = Vector2(2.08165e-12, -20)
 
-[node name="RayRight" type="RayCast2D" parent="Player"]
-target_position = Vector2(32, 2.08165e-12)
+[node name="Down" type="Node2D" parent="Player/Rays"]
+
+[node name="RayDown" type="RayCast2D" parent="Player/Rays/Down"]
+position = Vector2(0, 12)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="Left" type="Node2D" parent="Player/Rays"]
+
+[node name="RayLeft" type="RayCast2D" parent="Player/Rays/Left"]
+position = Vector2(-12, 0)
+target_position = Vector2(-20, 2.08165e-12)
+
+[node name="Right" type="Node2D" parent="Player/Rays"]
+
+[node name="RayRight" type="RayCast2D" parent="Player/Rays/Right"]
+position = Vector2(12, 0)
+target_position = Vector2(20, 2.08165e-12)
+
+[node name="Arm" type="Node2D" parent="Player"]
+visible = false
+
+[node name="GrabIcon" type="AnimatedSprite2D" parent="Player/Arm"]
+position = Vector2(2.08165e-12, -24)
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_og2dk")
+animation = &"open"

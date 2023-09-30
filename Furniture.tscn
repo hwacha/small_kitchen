@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://n24q4ut8ya3b"]
+
+[ext_resource type="Script" path="res://Furniture.gd" id="1_voppj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gac6s"]
+
+[node name="Furniture" type="StaticBody2D"]
+script = ExtResource("1_voppj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Body" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gac6s")
+
+[node name="Rays" type="Node2D" parent="."]
+
+[node name="Up" type="Node2D" parent="Rays"]
+
+[node name="RayCast2D" type="RayCast2D" parent="Rays/Up"]
+position = Vector2(2.08165e-12, -12)
+target_position = Vector2(2.08165e-12, -20)
+
+[node name="Down" type="Node2D" parent="Rays"]
+
+[node name="RayCast2D" type="RayCast2D" parent="Rays/Down"]
+position = Vector2(0, 12)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="Left" type="Node2D" parent="Rays"]
+
+[node name="RayCast2D" type="RayCast2D" parent="Rays/Left"]
+position = Vector2(-12, 2.08165e-12)
+target_position = Vector2(-20, 2.08165e-12)
+
+[node name="Right" type="Node2D" parent="Rays"]
+
+[node name="RayCast2D" type="RayCast2D" parent="Rays/Right"]
+position = Vector2(12, 2.08165e-12)
+target_position = Vector2(20, 2.08165e-12)

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-
-const BASE_MOVEMENT_SPEED = 32 * 6
+const TILE_SIZE = 32
+const BASE_MOVEMENT_SPEED = TILE_SIZE * 6
 
 var facing_dir = "down"
 var grabbing_dir = null
@@ -13,10 +13,17 @@ var target
 @onready var tilemap : TileMap = get_node("../TileMap")
 
 const index_offsets_by_direction = {
-	"up": Vector2i(0, -1),
-	"down": Vector2i(0, 1),
-	"left": Vector2i(-1, 0),
-	"right": Vector2i(1, 0),
+	"up": Vector2(0, -1),
+	"down": Vector2(0, 1),
+	"left": Vector2(-1, 0),
+	"right": Vector2(1, 0),
+}
+
+const angles_by_direction = {
+	"up": 0,
+	"down": PI,
+	"left": -PI/2,
+	"right": PI/2
 }
 
 func _ready():
@@ -25,68 +32,81 @@ func _ready():
 
 # returns false iff there is a
 # furniture piece in line which can't be moved
-func try_move_furniture_piece(tilemap_index) -> bool:
-	var wall_source_id = tilemap.get_cell_source_id(1, tilemap_index)
-	if wall_source_id != -1:
-		return false
-
-	var furniture_source_id = tilemap.get_cell_source_id(2, tilemap_index)
-	if furniture_source_id != -1:
-		if grabbing_dir == null:
-			return false
-			
-		var atlas_coords = tilemap.get_cell_atlas_coords(2, tilemap_index)
-			
-		if grabbing_dir != facing_dir:
-			tilemap.set_cell(2, tilemap_index, -1)
-			tilemap.set_cell(2, tilemap_index + index_offsets_by_direction[facing_dir], furniture_source_id, atlas_coords)
-			return true
-
-		var next_tilemap_index = tilemap_index + index_offsets_by_direction[grabbing_dir]
-		if not try_move_furniture_piece(next_tilemap_index):
+func try_move_furniture_piece(face_ray : RayCast2D) -> bool:
+	var self_object = face_ray.get_parent().get_parent().get_parent()
+	if face_ray.is_colliding():
+		# grabbing but walking into other furniture,
+		# or walking into other furniture while not grabbing
+		if (grabbing_dir != facing_dir and self_object == self) or grabbing_dir == null:
+			self_object.target = self_object.position
 			return false
 
-		tilemap.set_cell(2, tilemap_index, -1)
-		tilemap.set_cell(2, next_tilemap_index, furniture_source_id, atlas_coords)
+		# pushing furniture
+		var pushee = face_ray.get_collider()
+		
+		# walking or pushing into a wall
+		if not pushee is Furniture:
+			self_object.target = self_object.position
+			return false
+			
+		# box hit wall
+		var facing_rays = pushee.get_node("Rays/" + facing_dir.capitalize()).get_children()
+		for facing_ray in facing_rays:
+			if not try_move_furniture_piece(facing_ray):
+				self_object.target = self_object.position
+				return false
 
-	return true
+		if self_object.target.is_equal_approx(self_object.position):
+			self_object.target += index_offsets_by_direction[facing_dir] * TILE_SIZE
+
+		return true
+	else:
+		# pull
+		if self_object == self and grabbing_dir != facing_dir and grabbing_dir != null:
+			var grab_ray = face_ray.get_node("../../" + grabbing_dir.capitalize()).get_child(0)
+			assert(grab_ray.is_colliding())
+			var pullee = grab_ray.get_collider()
+			var facing_rays = pullee.get_node("Rays/" + facing_dir.capitalize()).get_children()
+			for facing_ray in facing_rays:
+				if not try_move_furniture_piece(facing_ray):
+					self_object.target = self_object.position
+					return false
+		
+		if self_object.target.is_equal_approx(self_object.position):
+			self_object.target += index_offsets_by_direction[facing_dir] * TILE_SIZE
+		return true
 
 func get_input():
-	var offset = Vector2(0, 0)
+	var walked = false
 	if grabbing_dir in ["up", "down", null]:
 		if Input.is_action_pressed("move_up"):
 			facing_dir = "up"
-			if not $RayUp.is_colliding():
-				offset = Vector2(0, -32)
+			walked = true
 		elif Input.is_action_pressed("move_down"):
 			facing_dir = "down"
-			if not $RayDown.is_colliding():
-				offset = Vector2(0, 32)
+			walked = true
 	if grabbing_dir in ["left", "right", null]:
 		if Input.is_action_pressed("move_left"):
 			facing_dir = "left"
-			if not $RayLeft.is_colliding():
-				offset = Vector2(-32, 0)
+			walked = true
 		elif Input.is_action_pressed("move_right"):
 			facing_dir = "right"
-			if not $RayRight.is_colliding():
-				offset = Vector2(32, 0)
+			walked = true
+
+	var face_ray : RayCast2D = get_node("Rays/" + facing_dir.capitalize()).get_child(0)
+	$Arm.visible = grabbing_dir != null or face_ray.is_colliding()
+	$Arm.rotation = angles_by_direction[grabbing_dir if grabbing_dir != null else facing_dir]
+	$Arm/GrabIcon.animation = "open" if grabbing_dir == null else "closed"
+	if face_ray.is_colliding():
+		var furniture = face_ray.get_collider()
+		if furniture is Furniture:
+			if Input.is_action_just_pressed("grab"):
+				grabbing_dir = facing_dir
+		else:
+			$Arm.visible = false
 	
-	var tilemap_player_index = tilemap.local_to_map(position)
-	var face_index = tilemap_player_index + index_offsets_by_direction[facing_dir]
-	var face_source_id = tilemap.get_cell_source_id(2, face_index)
-	if Input.is_action_just_pressed("grab") and face_source_id != -1:
-		grabbing_dir = facing_dir
-	
-	target = self.position + offset
-	var grab_index = face_index
-	
-	if grabbing_dir != null:
-		grab_index = tilemap_player_index + index_offsets_by_direction[grabbing_dir]
-	
-	if offset != Vector2(0, 0):
-		if not try_move_furniture_piece(grab_index):
-			target = self.position
+	if walked:
+		try_move_furniture_piece(face_ray)
 
 func _physics_process(delta):
 	if Input.is_action_just_released("grab"):
@@ -106,7 +126,8 @@ func _physics_process(delta):
 	else:
 		frames_idle = 0
 
+	var anim_dir = grabbing_dir if grabbing_dir != null else facing_dir
 	if frames_idle >= 2:
-		$AnimatedSprite2D.animation = "idle_" + facing_dir
+		$AnimatedSprite2D.animation = "idle_" + anim_dir
 	else:
-		$AnimatedSprite2D.animation = "walk_" + facing_dir
+		$AnimatedSprite2D.animation = "walk_" + anim_dir

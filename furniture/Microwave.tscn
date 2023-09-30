@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://b05ip1cujx0d5"]
+
+[ext_resource type="PackedScene" uid="uid://n24q4ut8ya3b" path="res://Furniture.tscn" id="1_qa41g"]
+[ext_resource type="Texture2D" uid="uid://8f67357ai5r4" path="res://assets/interior_32x.png" id="2_47v7f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7l62"]
+atlas = ExtResource("2_47v7f")
+region = Rect2(768, 192, 32, 32)
+
+[node name="Microwave" instance=ExtResource("1_qa41g")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_u7l62")
