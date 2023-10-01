@@ -4,10 +4,15 @@ class_name Furniture
 const TILE_SIZE = 32
 const BASE_MOVEMENT_SPEED = TILE_SIZE * 6
 
+@export var kind : String
+
 @export var weight : float = 1
+@export var width : int = 1
+@export var height : int = 1
 
 var target
 var velocity = Vector2(0, 0)
+var destroy_on_stop = false
 
 func _ready():
 	target = position
@@ -15,6 +20,11 @@ func _ready():
 
 func _physics_process(delta):
 	velocity = Vector2(0, 0)
-	if not target.is_equal_approx(position):
+	if target.is_equal_approx(position):
+		if destroy_on_stop:
+			var main = get_tree().get_root().get_child(0)
+			main.money += int(0.8 * main.base_prices_by_item[kind])
+			queue_free()
+	else:
 		velocity = position.direction_to(target) * BASE_MOVEMENT_SPEED
-	move_and_collide(velocity * delta)
+	position += velocity * delta

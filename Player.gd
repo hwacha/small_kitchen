@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 const TILE_SIZE = 32
 const BASE_MOVEMENT_SPEED = TILE_SIZE * 6
@@ -11,6 +12,7 @@ var frames_idle = 0
 var target
 
 @onready var tilemap : TileMap = get_node("../TileMap")
+@onready var shop_menu = get_node("../ShopWindow/ShopMenu")
 
 const index_offsets_by_direction = {
 	"up": Vector2(0, -1),
@@ -46,18 +48,25 @@ func try_move_furniture_piece(face_ray : RayCast2D) -> bool:
 		
 		# walking or pushing into a wall
 		if not pushee is Furniture:
-			self_object.target = self_object.position
-			return false
+			if pushee is ShopWindow and self_object is Furniture:
+				self_object.destroy_on_stop = true
+				self_object.target = self_object.position + index_offsets_by_direction[facing_dir] * TILE_SIZE
+				return true
+			else:
+				self_object.target = self_object.position
+				return false
 			
 		# box hit wall
 		var facing_rays = pushee.get_node("Rays/" + facing_dir.capitalize()).get_children()
 		for facing_ray in facing_rays:
 			if not try_move_furniture_piece(facing_ray):
 				self_object.target = self_object.position
+				if pushee is Furniture:
+					pushee.destroy_on_stop = false
 				return false
 
 		if self_object.target.is_equal_approx(self_object.position):
-			self_object.target += index_offsets_by_direction[facing_dir] * TILE_SIZE
+			self_object.target = self_object.position + index_offsets_by_direction[facing_dir] * TILE_SIZE
 
 		return true
 	else:
@@ -73,7 +82,7 @@ func try_move_furniture_piece(face_ray : RayCast2D) -> bool:
 					return false
 		
 		if self_object.target.is_equal_approx(self_object.position):
-			self_object.target += index_offsets_by_direction[facing_dir] * TILE_SIZE
+			self_object.target = self_object.position + index_offsets_by_direction[facing_dir] * TILE_SIZE
 		return true
 
 func get_input():
@@ -104,13 +113,29 @@ func get_input():
 				grabbing_dir = facing_dir
 		else:
 			$Arm.visible = false
+		
+		if Input.is_action_just_pressed("use"):
+			if furniture is ShopWindow:
+				shop_menu.active = true
+				return
+			else:
+				print("use furniture")
 	
 	if walked:
 		try_move_furniture_piece(face_ray)
 
 func _physics_process(delta):
+	if shop_menu.active:
+		return
+		
 	if Input.is_action_just_released("grab"):
 		grabbing_dir = null
+	
+	if grabbing_dir != null:
+		var grab_ray = get_node("Rays/" + grabbing_dir.capitalize()).get_child(0)
+		
+		if not grab_ray.is_colliding() or not grab_ray.get_collider() is Furniture:
+			grabbing_dir = null
 
 	velocity = Vector2(0, 0)
 	accepting_input = self.position.is_equal_approx(target)
@@ -118,7 +143,7 @@ func _physics_process(delta):
 		get_input()
 	else:
 		velocity = self.position.direction_to(target) * BASE_MOVEMENT_SPEED
-		move_and_collide(velocity * delta)
+		position += velocity * delta
 
 	if velocity.is_zero_approx():
 		frames_idle += 1

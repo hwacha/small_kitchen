@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://n1lpr3iliy4r"]
+
+[ext_resource type="PackedScene" uid="uid://n24q4ut8ya3b" path="res://Furniture.tscn" id="1_br7se"]
+[ext_resource type="Texture2D" uid="uid://8f67357ai5r4" path="res://assets/interior_32x.png" id="2_iheho"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3kq1i"]
+atlas = ExtResource("2_iheho")
+region = Rect2(384, 32, 32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0qxe5"]
+size = Vector2(54, 20)
+
+[node name="Countertop" instance=ExtResource("1_br7se")]
+kind = "Countertop"
+width = 2
+
+[node name="Sprite2D" parent="." index="0"]
+scale = Vector2(1.8, 0.9)
+texture = SubResource("AtlasTexture_3kq1i")
+
+[node name="Body" parent="." index="1"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_0qxe5")
+
+[node name="RayCast2D" parent="Rays/Up" index="0"]
+position = Vector2(-16, -12)
+
+[node name="RayCast2D2" type="RayCast2D" parent="Rays/Up" index="1"]
+position = Vector2(16, -12)
+target_position = Vector2(2.08165e-12, -20)
+
+[node name="RayCast2D" parent="Rays/Down" index="0"]
+position = Vector2(-16, 12)
+
+[node name="RayCast2D2" type="RayCast2D" parent="Rays/Down" index="1"]
+position = Vector2(16, 12)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="RayCast2D" parent="Rays/Left" index="0"]
+position = Vector2(-28, 0)
+
+[node name="RayCast2D" parent="Rays/Right" index="0"]
+position = Vector2(28, 0)

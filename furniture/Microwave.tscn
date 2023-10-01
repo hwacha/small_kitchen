@@ -8,6 +8,7 @@ atlas = ExtResource("2_47v7f")
 region = Rect2(768, 192, 32, 32)
 
 [node name="Microwave" instance=ExtResource("1_qa41g")]
+kind = "Microwave"
 
 [node name="Sprite2D" parent="." index="0"]
 texture = SubResource("AtlasTexture_u7l62")

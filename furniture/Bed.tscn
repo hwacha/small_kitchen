@@ -11,7 +11,9 @@ region = Rect2(544, 320, 32, 64)
 size = Vector2(20, 49)
 
 [node name="Bed" instance=ExtResource("1_1up05")]
+kind = "Bed"
 weight = 5.0
+height = 2
 
 [node name="Sprite2D" parent="." index="0"]
 position = Vector2(0, 10)

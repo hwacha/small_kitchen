@@ -1,15 +1,23 @@
-[gd_scene load_steps=43 format=3 uid="uid://ba5ndpgaao44s"]
+[gd_scene load_steps=54 format=3 uid="uid://ba5ndpgaao44s"]
 
 [ext_resource type="Texture2D" uid="uid://8f67357ai5r4" path="res://assets/interior_32x.png" id="1_a7l0v"]
+[ext_resource type="Script" path="res://main.gd" id="1_yw3d0"]
 [ext_resource type="Script" path="res://Player.gd" id="2_gynq6"]
 [ext_resource type="Texture2D" uid="uid://bj4wasud6x0kx" path="res://assets/male-walking-front.png" id="3_1toqr"]
+[ext_resource type="Texture2D" uid="uid://d1c4pweyusdqy" path="res://assets/window_closed.png" id="3_2t4y8"]
+[ext_resource type="Texture2D" uid="uid://chj6nf4l6olrl" path="res://assets/window_full_open.png" id="3_6lo6r"]
 [ext_resource type="Texture2D" uid="uid://dctvmmexmi6dw" path="res://assets/male-walking-left.png" id="4_vfy3r"]
+[ext_resource type="Texture2D" uid="uid://b4x3i6b5q47u2" path="res://assets/window_left_open.png" id="4_vupo0"]
+[ext_resource type="Texture2D" uid="uid://ba1ibeky0h2vs" path="res://assets/window_right_open.png" id="5_gb4dg"]
 [ext_resource type="Texture2D" uid="uid://del3mif205hfo" path="res://assets/male-walking-right.png" id="5_gtbrw"]
 [ext_resource type="Texture2D" uid="uid://d35scslrwbei3" path="res://assets/male-walking-back.png" id="6_xrix0"]
 [ext_resource type="PackedScene" uid="uid://cb883jrptn8au" path="res://furniture/Bed.tscn" id="7_4qovr"]
-[ext_resource type="PackedScene" uid="uid://b05ip1cujx0d5" path="res://furniture/Microwave.tscn" id="7_y8h8k"]
+[ext_resource type="Script" path="res://ShopMenu.gd" id="7_c7px7"]
+[ext_resource type="FontFile" uid="uid://b30l8rb5wm563" path="res://assets/PixelOperatorHB.ttf" id="7_qt0ue"]
 [ext_resource type="Texture2D" uid="uid://y45tvox5s53d" path="res://assets/back12.png" id="9_arj13"]
 [ext_resource type="Texture2D" uid="uid://cdqu3vn3al7mq" path="res://assets/back1.png" id="10_psn8r"]
+[ext_resource type="Script" path="res://ShopWindow.gd" id="11_233jq"]
+[ext_resource type="Script" path="res://Money.gd" id="18_717h0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_moawy"]
 texture = ExtResource("1_a7l0v")
@@ -87,11 +95,55 @@ texture_region_size = Vector2i(32, 32)
 24:6/0 = 0
 24:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 24:6/0/physics_layer_0/angular_velocity = 0.0
+10:15/0 = 0
+10:15/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:15/0/physics_layer_0/angular_velocity = 0.0
+11:15/0 = 0
+11:15/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+11:15/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSet" id="TileSet_c80um"]
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_moawy")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_42xpk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_2t4y8")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_6lo6r")
+}],
+"loop": true,
+"name": &"full_open",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_vupo0")
+}],
+"loop": true,
+"name": &"left_open",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_gb4dg")
+}],
+"loop": true,
+"name": &"right_open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upib6"]
+size = Vector2(40, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b4vqb"]
 atlas = ExtResource("3_1toqr")
@@ -351,7 +403,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8t240"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_yw3d0")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_c80um")
@@ -364,21 +419,66 @@ layer_1/modulate = Color(1, 1, 1, 1)
 layer_1/y_sort_enabled = false
 layer_1/y_sort_origin = 0
 layer_1/z_index = 0
-layer_1/tile_data = PackedInt32Array(524288, 0, 14, 8, 131072, 12, 524297, 262144, 14, 12, 131072, 12, 65536, 0, 14, 131072, 0, 14, 196608, 0, 14, 262144, 0, 14, 327680, 0, 14, 393216, 0, 14, 458752, 0, 14, 1, 131072, 12, 589825, 131072, 16, 2, 131072, 12, 589826, 131072, 16, 3, 131072, 12, 589827, 131072, 16, 4, 131072, 12, 589828, 131072, 16, 5, 131072, 12, 589829, 131072, 16, 6, 131072, 12, 589830, 131072, 16, 7, 131072, 12, 589831, 131072, 16, 589832, 131072, 16, 65545, 262144, 14, 131081, 262144, 14, 393225, 196608, 15, 458761, 262144, 14, 11, 131072, 12, 589835, 131072, 16, 589836, 131072, 16, 0, 65536, 12, 589824, 65536, 16, 196617, 196608, 13, 196618, 65536, 13, 131082, 0, 14, 65546, 0, 14, 458762, 0, 14, 524298, 0, 14, 393226, 65536, 15, 15, 196608, 12, 65551, 262144, 14, 131087, 262144, 14, 196623, 262144, 14, 262159, 262144, 14, 327695, 262144, 14, 393231, 262144, 14, 458767, 262144, 14, 524303, 262144, 14, 589839, 196608, 16, 13, 131072, 12, 14, 131072, 12, 589837, 131072, 16, 589838, 131072, 16, 589833, 196608, 16, 9, 196608, 12, 10, 65536, 12, 589834, 65536, 16)
+layer_1/tile_data = PackedInt32Array(524288, 0, 14, 8, 131072, 12, 524297, 262144, 14, 12, 131072, 12, 65536, 0, 14, 131072, 0, 14, 196608, 0, 14, 262144, 0, 14, 327680, 0, 14, 393216, 0, 14, 458752, 0, 14, 1, 131072, 12, 589825, 131072, 16, 2, 131072, 12, 589826, 131072, 16, 589827, 131072, 16, 589828, 131072, 16, 589829, 131072, 16, 6, 131072, 12, 589830, 131072, 16, 7, 131072, 12, 589831, 131072, 16, 589832, 131072, 16, 65545, 262144, 14, 131081, 262144, 14, 393225, 196608, 15, 458761, 262144, 14, 11, 131072, 12, 589835, 131072, 16, 589836, 131072, 16, 0, 65536, 12, 589824, 65536, 16, 196617, 196608, 13, 196618, 65536, 13, 131082, 0, 14, 65546, 0, 14, 458762, 0, 14, 524298, 0, 14, 393226, 65536, 15, 15, 196608, 12, 65551, 262144, 14, 131087, 262144, 14, 196623, 262144, 14, 262159, 262144, 14, 327695, 262144, 14, 393231, 262144, 14, 458767, 262144, 14, 524303, 262144, 14, 589839, 196608, 16, 13, 131072, 12, 14, 131072, 12, 589837, 131072, 16, 589838, 131072, 16, 589833, 196608, 16, 9, 196608, 12, 10, 65536, 12, 589834, 65536, 16, 3, 131072, 12)
+
+[node name="ShopWindow" type="StaticBody2D" parent="."]
+position = Vector2(160, 16)
+script = ExtResource("11_233jq")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ShopWindow"]
+position = Vector2(0, 1)
+scale = Vector2(1.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_42xpk")
+animation = &"closed"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShopWindow"]
+shape = SubResource("RectangleShape2D_upib6")
+
+[node name="LeftRay" type="RayCast2D" parent="ShopWindow"]
+position = Vector2(-16, 0)
+target_position = Vector2(2.08165e-12, 32)
+collision_mask = 3
+
+[node name="RightRay" type="RayCast2D" parent="ShopWindow"]
+position = Vector2(16, 0)
+target_position = Vector2(2.08165e-12, 32)
+collision_mask = 3
+
+[node name="InsideLeftRay" type="RayCast2D" parent="ShopWindow"]
+target_position = Vector2(-16, 2.08165e-12)
+
+[node name="InsideRightRay" type="RayCast2D" parent="ShopWindow"]
+target_position = Vector2(16, 2.08165e-12)
+
+[node name="ShopMenu" type="ColorRect" parent="ShopWindow"]
+visible = false
+z_index = 100
+offset_left = -64.0
+offset_top = 16.0
+offset_right = 64.0
+offset_bottom = 144.0
+color = Color(0.25, 0.5, 1, 0.8)
+script = ExtResource("7_c7px7")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ShopWindow/ShopMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Furniture" type="Node2D" parent="."]
 
 [node name="Bed" parent="Furniture" instance=ExtResource("7_4qovr")]
 position = Vector2(432, 80)
 
-[node name="Microwave" parent="Furniture" instance=ExtResource("7_y8h8k")]
-position = Vector2(208, 80)
-
-[node name="Microwave2" parent="Furniture" instance=ExtResource("7_y8h8k")]
-position = Vector2(176, 80)
-
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(400, 80)
+position = Vector2(144, 48)
+collision_layer = 2
 script = ExtResource("2_gynq6")
 metadata/_edit_group_ = true
 
@@ -420,3 +520,13 @@ position = Vector2(2.08165e-12, -24)
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_og2dk")
 animation = &"open"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_8t240")
+
+[node name="Money" type="RichTextLabel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_fonts/normal_font = ExtResource("7_qt0ue")
+text = "$500"
+script = ExtResource("18_717h0")
