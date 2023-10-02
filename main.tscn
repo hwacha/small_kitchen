@@ -489,6 +489,12 @@ target_position = Vector2(-16, 2.08165e-12)
 [node name="InsideRightRay" type="RayCast2D" parent="ShopWindow"]
 target_position = Vector2(16, 2.08165e-12)
 
+[node name="LeftDiff" type="Node2D" parent="ShopWindow"]
+position = Vector2(-24, 0)
+
+[node name="RightDiff" type="Node2D" parent="ShopWindow"]
+position = Vector2(11, 0)
+
 [node name="ShopMenu" type="ColorRect" parent="ShopWindow"]
 visible = false
 z_index = 100
@@ -574,10 +580,21 @@ animation = &"open"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource("RectangleShape2D_8t240")
 
+[node name="Diffs" type="Node2D" parent="Player"]
+
+[node name="HungerDiff" type="Node2D" parent="Player/Diffs"]
+position = Vector2(-21, 1)
+
+[node name="StaminaDiff" type="Node2D" parent="Player/Diffs"]
+position = Vector2(0, -12)
+
+[node name="ContentmentDiff" type="Node2D" parent="Player/Diffs"]
+position = Vector2(15, 1)
+
 [node name="Money" type="RichTextLabel" parent="."]
 offset_top = 3.0
 offset_right = 127.0
-offset_bottom = 20.0
+offset_bottom = 37.0
 theme_override_fonts/normal_font = ExtResource("7_qt0ue")
 text = "$500"
 fit_content = true

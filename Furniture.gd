@@ -24,7 +24,18 @@ func _physics_process(delta):
 	velocity = Vector2(0, 0)
 	if target.is_equal_approx(position):
 		if destroy_on_stop:
-			main.money += int(0.8 * main.base_prices_by_item[kind])
+			var resale_value = int(0.8 * main.base_prices_by_item[kind])
+			main.money += resale_value
+			var diff_text = preload("res://DiffText.tscn").instantiate()
+			diff_text.diff = resale_value
+			
+			var diff_spot = main.get_node("ShopWindow/RightDiff")
+			for left_ray in $Rays/Left.get_children():
+				if left_ray.is_colliding() and not left_ray.get_collider() is Furniture:
+					diff_spot = main.get_node("ShopWindow/LeftDiff")
+					break
+			
+			diff_spot.add_child(diff_text)
 			queue_free()
 	else:
 		velocity = position.direction_to(target) * BASE_MOVEMENT_SPEED * main.speed_multiplier

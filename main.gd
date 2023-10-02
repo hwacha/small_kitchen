@@ -43,13 +43,36 @@ var speed_multiplier : float = 1 : get = get_speed_multiplier
 
 var sleeping : bool = false : set = set_sleeping
 
+var suppress_diff_text = false
+
 func set_hunger(new_hunger):
+	if not suppress_diff_text:
+		var diff = new_hunger - hunger
+		var diff_text = preload("res://DiffText.tscn").instantiate()
+		diff_text.type = DiffText.DisplayType.HUNGER
+		diff_text.diff = diff
+		$Player/Diffs/HungerDiff.add_child(diff_text)
+	
 	hunger = min(new_hunger, max_hunger)
 	
 func set_stamina(new_stamina):
+	if not suppress_diff_text:
+		var diff = new_stamina - stamina
+		var diff_text = preload("res://DiffText.tscn").instantiate()
+		diff_text.type = DiffText.DisplayType.STAMINA
+		diff_text.diff = diff
+		$Player/Diffs/StaminaDiff.add_child(diff_text)
+
 	stamina = min(new_stamina, max_stamina)
 	
 func set_contentment(new_contentment):
+	if not suppress_diff_text:
+		var diff = new_contentment - contentment
+		var diff_text = preload("res://DiffText.tscn").instantiate()
+		diff_text.type = DiffText.DisplayType.CONTENTMENT
+		diff_text.diff = diff
+		$Player/Diffs/ContentmentDiff.add_child(diff_text)
+
 	contentment = min(new_contentment, max_contentment)
 
 func set_sleeping(new_sleeping):
@@ -78,16 +101,23 @@ func _ready():
 #	pass
 
 func _on_timer_timeout():
+	suppress_diff_text = true
 	if not sleeping:
 		hunger -= 1
-		contentment -= max(int(time_contentment_last_replenished - 12), 0)
+		contentment -= max(int((time_contentment_last_replenished / 2) - 8), 0)
 		time_contentment_last_replenished += BASE_TIME_RATE
-
+	
+	suppress_diff_text = false
+	
 	time += BASE_TIME_RATE
 	
 	var rent_loss = false
 	
 	if time >= RENT_TIME:
+		var diff_text = preload("res://DiffText.tscn").instantiate()
+		diff_text.position.y = 8
+		diff_text.diff = -rent
+		$Money.add_child(diff_text)
 		money -= rent
 		if money < 0:
 			rent_loss = true

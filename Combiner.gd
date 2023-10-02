@@ -13,7 +13,6 @@ func try_add_ingredient(ingredient : Furniture) -> bool:
 	
 	var viable_recipes = recipes.filter(func (recipe):
 		for already_existing_ingredient in $Elements/Inner.get_children():
-			print(already_existing_ingredient)
 			if not already_existing_ingredient.kind in recipe[0]:
 				return false
 		return true)

@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://dll066onwdkp8"]
+
+[ext_resource type="Script" path="res://DiffText.gd" id="1_fyyhc"]
+[ext_resource type="FontFile" uid="uid://bs6wwwk6jbs7" path="res://assets/PixelOperator8.ttf" id="1_ni48j"]
+
+[node name="DiffText" type="Control"]
+z_index = 15
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fyyhc")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 70.0
+offset_bottom = 16.0
+theme_override_fonts/normal_font = ExtResource("1_ni48j")
+theme_override_font_sizes/normal_font_size = 8
+text = "+$500"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Lifetime" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]

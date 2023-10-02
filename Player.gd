@@ -114,7 +114,9 @@ func get_input():
 			covers.z_index = 0
 			covers = null
 			main.sleeping = false
+		main.suppress_diff_text = true
 		main.stamina += 0.2
+		main.suppress_diff_text = false
 		return
 		
 	var walked = false
@@ -170,8 +172,10 @@ func get_input():
 				return accum + furn.weight
 			var total_weight = moved_furniture.reduce(sum, 0)
 			var strength = 5
-
+	
+			main.suppress_diff_text = true
 			main.stamina -= total_weight / strength
+			main.suppress_diff_text = false
 		else:
 			should_abort_move = true
 

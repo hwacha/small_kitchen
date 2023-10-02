@@ -11,6 +11,8 @@ var selection_index = 0 : set = set_selection_index
 @onready var shop_window_right_ray = get_parent().get_node("RightRay")
 @onready var shop_window_inside_left_ray = get_parent().get_node("InsideLeftRay")
 @onready var shop_window_inside_right_ray = get_parent().get_node("InsideRightRay")
+@onready var shop_window_left_diff = get_parent().get_node("LeftDiff")
+@onready var shop_window_right_diff = get_parent().get_node("RightDiff")
 
 var menu_items = []
 
@@ -81,9 +83,12 @@ func get_input():
 			var new_item_path = "res://furniture/" + new_item_name + ".tscn"
 			var new_item = load(new_item_path).instantiate()
 			
+			var price_diff = shop_window_left_diff
+			
 			if new_item.width == 1:
 				if shop_window_right_ray.is_colliding() and shop_window_right_ray.get_collider() is Player:
 					new_item.position = get_parent().position + Vector2(16, 0)
+					price_diff = shop_window_right_diff
 				else:
 					new_item.position = get_parent().position - Vector2(16, 0)
 			else:
@@ -98,7 +103,12 @@ func get_input():
 				
 			get_node("../../Furniture").add_child(new_item)
 			call_deferred("set_active", false)
+			
 			main.money -= new_item_cost
+			
+			var diff_text = preload("res://DiffText.tscn").instantiate()
+			diff_text.diff = -new_item_cost
+			price_diff.add_child(diff_text)
 
 func _ready():
 	var menu_item_scene = preload("res://MenuItem.tscn")

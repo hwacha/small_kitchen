@@ -10,7 +10,7 @@ region = Rect2(192, 256, 32, 32)
 
 [node name="Lettuce" instance=ExtResource("1_javbv")]
 hunger = 3
-contentment = 2
+contentment = -2
 kind = "Lettuce"
 
 [node name="Sprite2D" parent="." index="0"]
