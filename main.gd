@@ -16,9 +16,9 @@ const base_prices_by_item = {
 }
 
 const BASE_MONEY       : int = 500
-const BASE_HUNGER      : int = 100
-const BASE_STAMINA     : float = 100
-const BASE_CONTENTMENT : int = 100
+const BASE_HUNGER      : int = 200
+const BASE_STAMINA     : float = 200
+const BASE_CONTENTMENT : int = 200
 
 var max_hunger      : int = BASE_HUNGER
 var max_stamina     : float = BASE_STAMINA
