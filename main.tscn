@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://ba5ndpgaao44s"]
+[gd_scene load_steps=61 format=3 uid="uid://ba5ndpgaao44s"]
 
 [ext_resource type="Texture2D" uid="uid://8f67357ai5r4" path="res://assets/interior_32x.png" id="1_a7l0v"]
 [ext_resource type="Script" path="res://main.gd" id="1_yw3d0"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cb883jrptn8au" path="res://furniture/Bed.tscn" id="7_4qovr"]
 [ext_resource type="Script" path="res://ShopMenu.gd" id="7_c7px7"]
 [ext_resource type="FontFile" uid="uid://b30l8rb5wm563" path="res://assets/PixelOperatorHB.ttf" id="7_qt0ue"]
+[ext_resource type="Texture2D" uid="uid://h5sk37qj2imk" path="res://assets/pixil-frame-0(3).png" id="9_0pwnj"]
 [ext_resource type="Texture2D" uid="uid://y45tvox5s53d" path="res://assets/back12.png" id="9_arj13"]
 [ext_resource type="Texture2D" uid="uid://cdqu3vn3al7mq" path="res://assets/back1.png" id="10_psn8r"]
 [ext_resource type="Script" path="res://ShopWindow.gd" id="11_233jq"]
@@ -497,6 +498,17 @@ offset_right = 64.0
 offset_bottom = 144.0
 color = Color(0.25, 0.5, 1, 0.8)
 script = ExtResource("7_c7px7")
+
+[node name="UpArrow" type="Sprite2D" parent="ShopWindow/ShopMenu"]
+visible = false
+position = Vector2(64, 5)
+texture = ExtResource("9_0pwnj")
+
+[node name="DownArrow" type="Sprite2D" parent="ShopWindow/ShopMenu"]
+visible = false
+position = Vector2(64, 123)
+rotation = 3.14159
+texture = ExtResource("9_0pwnj")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ShopWindow/ShopMenu"]
 layout_mode = 1

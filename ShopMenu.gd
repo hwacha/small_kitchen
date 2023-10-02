@@ -107,3 +107,5 @@ func _ready():
 func _physics_process(_delta):
 	if active:
 		get_input()
+		$UpArrow.visible = menu_index > 0
+		$DownArrow.visible = menu_index + 5 < menu_items.size()
