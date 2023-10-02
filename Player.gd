@@ -17,7 +17,7 @@ var covers = null
 
 @onready var tilemap : TileMap = get_node("../TileMap")
 @onready var shop_menu = get_node("../ShopWindow/ShopMenu")
-@onready var main = get_tree().get_root().get_child(0)
+@onready var main = get_node("/root/Main")
 
 const index_offsets_by_direction = {
 	"up": Vector2(0, -1),

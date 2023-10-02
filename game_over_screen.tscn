@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://h4xoaodtaifj"]
+
+[ext_resource type="FontFile" uid="uid://b30l8rb5wm563" path="res://assets/PixelOperatorHB.ttf" id="1_24icm"]
+[ext_resource type="Script" path="res://game_over_screen.gd" id="1_mkutv"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mkutv")
+
+[node name="GameOverText" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_top = 74.0
+offset_right = 512.0
+offset_bottom = 138.0
+theme_override_fonts/normal_font = ExtResource("1_24icm")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[center]GAME OVER[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="Loss" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 187.0
+offset_top = 144.0
+offset_right = 512.0
+offset_bottom = 208.0
+theme_override_fonts/normal_font = ExtResource("1_24icm")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "This is the loss condition text explanation of what went wrong."
+fit_content = true
+scroll_active = false
+
+[node name="PressToRestart" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 256.0
+offset_right = 176.0
+offset_bottom = 272.0
+theme_override_fonts/normal_font = ExtResource("1_24icm")
+theme_override_font_sizes/normal_font_size = 16
+text = "Press Z to restart"
+fit_content = true
+scroll_active = false
+
+[node name="PressToReturn" type="RichTextLabel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 309.0
+offset_top = 256.0
+offset_right = 488.0
+offset_bottom = 272.0
+theme_override_fonts/normal_font = ExtResource("1_24icm")
+theme_override_font_sizes/normal_font_size = 16
+text = "Press X to return to menu"
+fit_content = true
+scroll_active = false

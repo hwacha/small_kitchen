@@ -4,7 +4,7 @@ var active = false : set = set_active
 var menu_index = 0 : set = set_menu_index
 var selection_index = 0 : set = set_selection_index
 
-@onready var main = get_tree().get_root().get_child(0)
+@onready var main = get_node("/root/Main")
 
 @onready var items : VBoxContainer = $VBoxContainer
 @onready var shop_window_left_ray = get_parent().get_node("LeftRay")

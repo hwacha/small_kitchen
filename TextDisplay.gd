@@ -1,6 +1,6 @@
 extends RichTextLabel
 
-@onready var main = get_tree().get_root().get_child(0)
+@onready var main = get_node("/root/Main")
 
 enum DisplayType {
 	MONEY,
