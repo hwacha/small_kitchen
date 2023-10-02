@@ -104,20 +104,18 @@ func try_move_furniture_piece(face_ray : RayCast2D, moved_furniture: Array[Furni
 
 func get_input():
 	var walked = false
-	if grabbing_dir in ["up", "down", null]:
-		if Input.is_action_pressed("move_up"):
-			facing_dir = "up"
-			walked = true
-		elif Input.is_action_pressed("move_down"):
-			facing_dir = "down"
-			walked = true
-	if grabbing_dir in ["left", "right", null]:
-		if Input.is_action_pressed("move_left"):
-			facing_dir = "left"
-			walked = true
-		elif Input.is_action_pressed("move_right"):
-			facing_dir = "right"
-			walked = true
+	if Input.is_action_pressed("move_up"):
+		facing_dir = "up"
+		walked = true
+	elif Input.is_action_pressed("move_down"):
+		facing_dir = "down"
+		walked = true
+	elif Input.is_action_pressed("move_left"):
+		facing_dir = "left"
+		walked = true
+	elif Input.is_action_pressed("move_right"):
+		facing_dir = "right"
+		walked = true
 
 	var face_ray : RayCast2D = get_node("Rays/" + facing_dir.capitalize()).get_child(0)
 	$Arm.visible = grabbing_dir != null or face_ray.is_colliding()
