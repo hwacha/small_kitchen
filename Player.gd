@@ -153,7 +153,7 @@ func get_input():
 				main.hunger      += furniture.hunger
 				main.stamina     += furniture.stamina
 				main.contentment += furniture.contentment
-				furniture.queue_free()
+				furniture.consume(position)
 			elif furniture is Combiner:
 				if furniture.completed_recipe != null:
 					furniture.start_cooking()
