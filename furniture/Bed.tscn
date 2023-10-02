@@ -20,11 +20,11 @@ weight = 5.0
 height = 2
 
 [node name="Sprite2D" parent="." index="0"]
-position = Vector2(0, 10)
+position = Vector2(2.08165e-12, -8)
 texture = SubResource("AtlasTexture_lxqaw")
 
 [node name="Covers" type="Sprite2D" parent="." index="1"]
-position = Vector2(0, 42)
+position = Vector2(2.08165e-12, 24)
 texture = SubResource("AtlasTexture_p6ouh")
 
 [node name="Body" parent="." index="2"]
@@ -39,7 +39,7 @@ position = Vector2(-12, 32)
 target_position = Vector2(-20, 2.08165e-12)
 
 [node name="Right" parent="Rays" index="3"]
-position = Vector2(0, 42)
+position = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="RayCast2D2" type="RayCast2D" parent="Rays/Right" index="1"]
 position = Vector2(12, 32)

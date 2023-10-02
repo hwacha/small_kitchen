@@ -113,6 +113,7 @@ func get_input():
 			waking_destination = null
 			covers.z_index = 0
 			covers = null
+			main.sleeping = false
 		main.stamina += 0.2
 		return
 		
@@ -158,7 +159,8 @@ func get_input():
 				waking_destination = position
 				covers = furniture.get_node("Covers")
 				covers.z_index = 5
-				target = furniture.position + Vector2(0, 24)
+				target = furniture.position + Vector2(0, 8)
+				main.sleeping = true
 	
 	if walked:
 		var moved_furniture : Array[Furniture] = []

@@ -576,12 +576,24 @@ shape = SubResource("RectangleShape2D_8t240")
 
 [node name="Money" type="RichTextLabel" parent="."]
 offset_top = 3.0
-offset_right = 40.0
-offset_bottom = 43.0
+offset_right = 127.0
+offset_bottom = 20.0
 theme_override_fonts/normal_font = ExtResource("7_qt0ue")
 text = "$500"
+fit_content = true
 scroll_active = false
 script = ExtResource("18_60137")
+
+[node name="Rent" type="RichTextLabel" parent="."]
+offset_left = 24.0
+offset_top = 304.0
+offset_right = 297.0
+offset_bottom = 344.0
+theme_override_fonts/normal_font = ExtResource("7_qt0ue")
+fit_content = true
+scroll_active = false
+script = ExtResource("18_60137")
+type = 1
 
 [node name="Hunger" type="RichTextLabel" parent="."]
 offset_left = 227.0
