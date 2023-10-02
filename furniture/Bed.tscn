@@ -1,11 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://cb883jrptn8au"]
+[gd_scene load_steps=6 format=3 uid="uid://cb883jrptn8au"]
 
 [ext_resource type="PackedScene" uid="uid://n24q4ut8ya3b" path="res://Furniture.tscn" id="1_1up05"]
 [ext_resource type="Texture2D" uid="uid://8f67357ai5r4" path="res://assets/interior_32x.png" id="2_p0yco"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lxqaw"]
 atlas = ExtResource("2_p0yco")
-region = Rect2(544, 320, 32, 64)
+region = Rect2(544, 320, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6ouh"]
+atlas = ExtResource("2_p0yco")
+region = Rect2(544, 352, 32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2tggi"]
 size = Vector2(20, 49)
@@ -19,7 +23,11 @@ height = 2
 position = Vector2(0, 10)
 texture = SubResource("AtlasTexture_lxqaw")
 
-[node name="Body" parent="." index="1"]
+[node name="Covers" type="Sprite2D" parent="." index="1"]
+position = Vector2(0, 42)
+texture = SubResource("AtlasTexture_p6ouh")
+
+[node name="Body" parent="." index="2"]
 position = Vector2(0, 14)
 shape = SubResource("RectangleShape2D_2tggi")
 
@@ -29,6 +37,9 @@ position = Vector2(2.08165e-12, 44)
 [node name="RayCast2D2" type="RayCast2D" parent="Rays/Left" index="1"]
 position = Vector2(-12, 32)
 target_position = Vector2(-20, 2.08165e-12)
+
+[node name="Right" parent="Rays" index="3"]
+position = Vector2(0, 42)
 
 [node name="RayCast2D2" type="RayCast2D" parent="Rays/Right" index="1"]
 position = Vector2(12, 32)

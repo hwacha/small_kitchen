@@ -10,6 +10,10 @@ var accepting_input : bool = true
 var frames_idle = 0
 
 var target
+var time_travelling : float = 0
+
+var waking_destination = null
+var covers = null
 
 @onready var tilemap : TileMap = get_node("../TileMap")
 @onready var shop_menu = get_node("../ShopWindow/ShopMenu")
@@ -103,6 +107,15 @@ func try_move_furniture_piece(face_ray : RayCast2D, moved_furniture: Array[Furni
 		return true
 
 func get_input():
+	if waking_destination != null:
+		if Input.is_action_just_pressed("use"):
+			target = waking_destination
+			waking_destination = null
+			covers.z_index = 0
+			covers = null
+		main.stamina += 0.2
+		return
+		
 	var walked = false
 	if Input.is_action_pressed("move_up"):
 		facing_dir = "up"
@@ -141,7 +154,11 @@ func get_input():
 			elif furniture is Combiner:
 				if furniture.completed_recipe != null:
 					furniture.start_cooking()
-				print("use furniture")
+			elif furniture is Furniture and furniture.kind == "Bed":
+				waking_destination = position
+				covers = furniture.get_node("Covers")
+				covers.z_index = 5
+				target = furniture.position + Vector2(0, 24)
 	
 	if walked:
 		var moved_furniture : Array[Furniture] = []
@@ -171,14 +188,19 @@ func _physics_process(delta):
 		
 		if not grab_ray.is_colliding() or not grab_ray.get_collider() is Furniture:
 			grabbing_dir = null
-
+	
+	var speed = BASE_MOVEMENT_SPEED * main.speed_multiplier
+	if time_travelling * speed >= 32:
+		position = target
 	velocity = Vector2(0, 0)
 	accepting_input = self.position.is_equal_approx(target)
 	if accepting_input:
+		time_travelling = 0
 		get_input()
 	else:
-		velocity = self.position.direction_to(target) * BASE_MOVEMENT_SPEED * main.speed_multiplier
+		velocity = self.position.direction_to(target) * speed
 		position += velocity * delta
+		time_travelling += delta
 
 	if velocity.is_zero_approx():
 		frames_idle += 1
@@ -186,7 +208,8 @@ func _physics_process(delta):
 	else:
 		frames_idle = 0
 
-	var anim_dir = grabbing_dir if grabbing_dir != null else facing_dir
+	var anim_dir = "down" if waking_destination != null else \
+		(grabbing_dir if grabbing_dir != null else facing_dir)
 	if frames_idle >= 2:
 		$AnimatedSprite2D.animation = "idle_" + anim_dir
 	else:

@@ -565,6 +565,7 @@ target_position = Vector2(20, 2.08165e-12)
 visible = false
 
 [node name="GrabIcon" type="AnimatedSprite2D" parent="Player/Arm"]
+z_index = 10
 position = Vector2(2.08165e-12, -24)
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_og2dk")
