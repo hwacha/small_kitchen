@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjxerp22eik2r"]
+
+[ext_resource type="PackedScene" uid="uid://r3ge2m06csfb" path="res://Food.tscn" id="1_nb3tc"]
+[ext_resource type="Texture2D" uid="uid://fy5wace3vxcb" path="res://assets/Pixel_House_Icons_1.2.1-32x.png" id="2_t0786"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1jte1"]
+resource_local_to_scene = true
+atlas = ExtResource("2_t0786")
+region = Rect2(0, 256, 32, 32)
+
+[node name="Tomato" instance=ExtResource("1_nb3tc")]
+hunger = 15
+stamina = 5
+kind = "Tomato"
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_1jte1")

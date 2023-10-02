@@ -1,43 +1,58 @@
 [gd_scene load_steps=5 format=3 uid="uid://n1lpr3iliy4r"]
 
-[ext_resource type="PackedScene" uid="uid://n24q4ut8ya3b" path="res://Furniture.tscn" id="1_br7se"]
+[ext_resource type="PackedScene" uid="uid://dss482nueei0q" path="res://Combiner.tscn" id="1_v0kwr"]
 [ext_resource type="Texture2D" uid="uid://8f67357ai5r4" path="res://assets/interior_32x.png" id="2_iheho"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3kq1i"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_pcdr5"]
 atlas = ExtResource("2_iheho")
-region = Rect2(384, 32, 32, 32)
+region = Rect2(384, 32, 64, 32)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0qxe5"]
-size = Vector2(54, 20)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtj7g"]
+size = Vector2(42, 12)
 
-[node name="Countertop" instance=ExtResource("1_br7se")]
+[node name="Countertop" instance=ExtResource("1_v0kwr")]
+recipes = Array[Array]([[{
+"Carrot": 1,
+"Lettuce": 1,
+"Tomato": 1
+}, "Salad", 3.0]])
 kind = "Countertop"
+weight = 12.0
 width = 2
 
 [node name="Sprite2D" parent="." index="0"]
-scale = Vector2(1.8, 0.9)
-texture = SubResource("AtlasTexture_3kq1i")
+texture = SubResource("AtlasTexture_pcdr5")
 
 [node name="Body" parent="." index="1"]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_0qxe5")
+shape = SubResource("RectangleShape2D_gtj7g")
 
 [node name="RayCast2D" parent="Rays/Up" index="0"]
-position = Vector2(-16, -12)
+position = Vector2(-8, -12)
 
 [node name="RayCast2D2" type="RayCast2D" parent="Rays/Up" index="1"]
-position = Vector2(16, -12)
+position = Vector2(8, -12)
 target_position = Vector2(2.08165e-12, -20)
 
 [node name="RayCast2D" parent="Rays/Down" index="0"]
-position = Vector2(-16, 12)
+position = Vector2(-8, 12)
 
 [node name="RayCast2D2" type="RayCast2D" parent="Rays/Down" index="1"]
-position = Vector2(16, 12)
+position = Vector2(8, 12)
 target_position = Vector2(2.08165e-12, 20)
 
 [node name="RayCast2D" parent="Rays/Left" index="0"]
-position = Vector2(-28, 0)
+position = Vector2(-28, 2.08165e-12)
 
 [node name="RayCast2D" parent="Rays/Right" index="0"]
-position = Vector2(28, 0)
+position = Vector2(28, 2.08165e-12)
+
+[node name="ProgressBar" parent="Elements" index="1"]
+visible = false
+layout_mode = 1
+value = 0.0
+
+[node name="1" parent="SpawnPoints" index="0"]
+position = Vector2(-16, 2.08165e-12)
+
+[node name="2" type="Node2D" parent="SpawnPoints" index="1"]
+position = Vector2(16, 2.08165e-12)

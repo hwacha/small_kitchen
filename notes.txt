@@ -1,0 +1,71 @@
+CHOICES
+- day and week cycle
+	- rent due every week, raises cost of living (everything is more expensive, including rent)
+	- every day, demand for goods fluctuates
+	- nighttime is dark, need to either sleep then or buy a light to see
+	- sleeping in bed will accelarate time
+
+- three meters: stamina, hunger, contentment
+	- stamina dictates how fast furniture can be moved w/r/t weight
+		- replenished by sleeping in bed
+	- hunger kills if reaches 0
+		- replenished by eating food
+	- contentment kills (or causes debuffs) if reaches 0
+		- replenished by making new stuff, entertaining self, novelty items
+
+- window/pocket where player buys stuff. They buy something and then a flap opens up. They pull the item out from there
+	- also where the player sells stuff, if they push an item into the flap
+
+- press A to activate an item
+	- if food, eats
+	- if furniture, uses furniture
+	- if a combo item that accepts one or more other items, it accepts based on what's in line behind the player
+		- combos with full line behind player
+
+
+- recipes can be learned through TV
+- daily demand can be learned through computer
+- dark at night
+
+
+FURNITURE ITEMS
+- press
+- oven
+- stovetop
+- countertop
+- TV
+- computer
+- bed
+- light - lights up within certain radius
+
+TODO
+	- how should multi-item equipment be activated?
+		- push items in one-at-a-time
+		- press "use" button and use all relevant items behind the player
+
+
+	- base ingredients
+		- salt
+		- water
+		- bread
+		- milk
+		- 
+
+	- come up with craft tree for cooking/using kitchen equipment
+		- omelet
+			- cheese
+			- fried egg
+			- mushroom
+			- 
+		- fruit smoothie
+			- 
+		- salad
+			- lettuce
+			- carrot
+			- onion
+		- pizza
+			- bread + cheese + tomato
+		- peanut butter jelly sandwhich
+			- PB
+			- jelly
+			- 

@@ -14,6 +14,9 @@ var selection_index = 0 : set = set_selection_index
 
 var menu_items = []
 
+var frames_down = 0 # number of frames menu up is held
+var frames_up = 0 # number of frames menu down is held
+
 func set_active(new_active):
 	active = new_active
 	visible = active
@@ -38,14 +41,28 @@ func set_selection_index(new_selection_index):
 	selection_index = new_selection_index
 
 func get_input():
+	if Input.is_action_pressed("menu_down") and Input.is_action_pressed("menu_up"):
+		frames_down = 0
+		frames_up = 0
+	else:
+		if Input.is_action_pressed("menu_down"):
+			frames_down += 1
+			if frames_down == 1 or (frames_down > 15 and frames_down % 5 == 1):
+				if selection_index < main.base_prices_by_item.size() - 1:
+					selection_index += 1
+		else:
+			frames_down = 0
+	
+		if Input.is_action_pressed("menu_up"):
+			frames_up += 1
+			if frames_up == 1 or (frames_up > 15 and frames_up % 5 == 1):
+				if selection_index > 0:
+					selection_index -= 1
+		else:
+			frames_up = 0
+	
 	if Input.is_action_just_pressed("menu_back"):
 		active = false
-	elif Input.is_action_just_pressed("menu_down"):
-		if selection_index < main.base_prices_by_item.size() - 1:
-			selection_index += 1
-	elif Input.is_action_just_pressed("menu_up"):
-		if selection_index > 0:
-			selection_index -= 1
 	elif Input.is_action_just_pressed("menu_confirm"):
 		var new_item_name = menu_items[selection_index].get_node("Name").text
 		var new_item_cost = main.base_prices_by_item[new_item_name]

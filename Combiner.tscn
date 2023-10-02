@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=3 uid="uid://dss482nueei0q"]
+
+[ext_resource type="PackedScene" uid="uid://n24q4ut8ya3b" path="res://Furniture.tscn" id="1_qmex4"]
+[ext_resource type="Script" path="res://Combiner.gd" id="2_rw308"]
+
+[sub_resource type="Theme" id="Theme_gce1b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s82co"]
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wq8xq"]
+bg_color = Color(0.490196, 0.584314, 0.878431, 1)
+
+[node name="Combiner" instance=ExtResource("1_qmex4")]
+script = ExtResource("2_rw308")
+recipes = Array[Array]([])
+
+[node name="Elements" type="ColorRect" parent="." index="3"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -32.0
+offset_right = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_gce1b")
+color = Color(0.78, 0.53, 0, 0.8)
+
+[node name="Inner" type="ColorRect" parent="Elements" index="0"]
+modulate = Color(1, 1, 1, 0.6)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.909804, 0.721569, 1)
+
+[node name="ProgressBar" type="ProgressBar" parent="Elements" index="1"]
+offset_top = -4.0
+offset_right = 32.0
+theme_override_styles/background = SubResource("StyleBoxFlat_s82co")
+theme_override_styles/fill = SubResource("StyleBoxFlat_wq8xq")
+max_value = 1.0
+step = 0.05
+value = 1.0
+show_percentage = false
+
+[node name="CookTimer" type="Timer" parent="." index="4"]
+one_shot = true
+
+[node name="SpawnPoints" type="Node2D" parent="." index="5"]
+
+[node name="1" type="Node2D" parent="SpawnPoints" index="0"]
+
+[connection signal="timeout" from="CookTimer" to="." method="_on_cook_timer_timeout"]

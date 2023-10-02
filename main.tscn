@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://ba5ndpgaao44s"]
+[gd_scene load_steps=60 format=3 uid="uid://ba5ndpgaao44s"]
 
 [ext_resource type="Texture2D" uid="uid://8f67357ai5r4" path="res://assets/interior_32x.png" id="1_a7l0v"]
 [ext_resource type="Script" path="res://main.gd" id="1_yw3d0"]
@@ -17,7 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://y45tvox5s53d" path="res://assets/back12.png" id="9_arj13"]
 [ext_resource type="Texture2D" uid="uid://cdqu3vn3al7mq" path="res://assets/back1.png" id="10_psn8r"]
 [ext_resource type="Script" path="res://ShopWindow.gd" id="11_233jq"]
-[ext_resource type="Script" path="res://Money.gd" id="18_717h0"]
+[ext_resource type="Script" path="res://TextDisplay.gd" id="18_60137"]
+[ext_resource type="Script" path="res://BarDisplay.gd" id="19_hf8je"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_moawy"]
 texture = ExtResource("1_a7l0v")
@@ -405,6 +406,42 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8t240"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rkwql"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bh5sf"]
+bg_color = Color(0.54902, 1, 0.466667, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jh348"]
+bg_color = Color(1, 0.964706, 0.419608, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uf0vv"]
+bg_color = Color(0.247059, 0.827451, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x7iku"]
+size = Vector2(67, 43)
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_yw3d0")
 
@@ -525,8 +562,85 @@ animation = &"open"
 shape = SubResource("RectangleShape2D_8t240")
 
 [node name="Money" type="RichTextLabel" parent="."]
+offset_top = 3.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 43.0
 theme_override_fonts/normal_font = ExtResource("7_qt0ue")
 text = "$500"
-script = ExtResource("18_717h0")
+scroll_active = false
+script = ExtResource("18_60137")
+
+[node name="Hunger" type="RichTextLabel" parent="."]
+offset_left = 227.0
+offset_top = 2.0
+offset_right = 263.0
+offset_bottom = 18.0
+theme_override_fonts/normal_font = ExtResource("7_qt0ue")
+text = "HNGR"
+scroll_active = false
+
+[node name="HungerBar" type="ProgressBar" parent="."]
+offset_left = 265.0
+offset_top = 6.0
+offset_right = 297.0
+offset_bottom = 15.0
+theme_override_styles/background = SubResource("StyleBoxFlat_rkwql")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bh5sf")
+step = 1.0
+value = 100.0
+show_percentage = false
+script = ExtResource("19_hf8je")
+
+[node name="Stamina" type="RichTextLabel" parent="."]
+offset_left = 322.0
+offset_top = 2.0
+offset_right = 358.0
+offset_bottom = 18.0
+theme_override_fonts/normal_font = ExtResource("7_qt0ue")
+text = "STMN"
+scroll_active = false
+
+[node name="StaminaBar" type="ProgressBar" parent="."]
+offset_left = 361.0
+offset_top = 6.0
+offset_right = 393.0
+offset_bottom = 15.0
+theme_override_styles/background = SubResource("StyleBoxFlat_rkwql")
+theme_override_styles/fill = SubResource("StyleBoxFlat_jh348")
+step = 1.0
+value = 100.0
+show_percentage = false
+script = ExtResource("19_hf8je")
+type = 1
+
+[node name="Contentment" type="RichTextLabel" parent="."]
+offset_left = 415.0
+offset_top = 2.0
+offset_right = 451.0
+offset_bottom = 18.0
+theme_override_fonts/normal_font = ExtResource("7_qt0ue")
+text = "CMNT"
+scroll_active = false
+
+[node name="ContentmentBar" type="ProgressBar" parent="."]
+offset_left = 457.0
+offset_top = 6.0
+offset_right = 489.0
+offset_bottom = 15.0
+theme_override_styles/background = SubResource("StyleBoxFlat_rkwql")
+theme_override_styles/fill = SubResource("StyleBoxFlat_uf0vv")
+step = 1.0
+value = 100.0
+show_percentage = false
+script = ExtResource("19_hf8je")
+type = 2
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="WallBehindShopWindow" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallBehindShopWindow"]
+position = Vector2(160.5, -19.5)
+shape = SubResource("RectangleShape2D_x7iku")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

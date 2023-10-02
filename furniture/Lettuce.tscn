@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dedm8dwifnyaj"]
+
+[ext_resource type="PackedScene" uid="uid://r3ge2m06csfb" path="res://Food.tscn" id="1_javbv"]
+[ext_resource type="Texture2D" uid="uid://fy5wace3vxcb" path="res://assets/Pixel_House_Icons_1.2.1-32x.png" id="2_hsk8d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4orw"]
+resource_local_to_scene = true
+atlas = ExtResource("2_hsk8d")
+region = Rect2(192, 256, 32, 32)
+
+[node name="Lettuce" instance=ExtResource("1_javbv")]
+hunger = 3
+contentment = 2
+kind = "Lettuce"
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_y4orw")
