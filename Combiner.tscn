@@ -50,6 +50,7 @@ grow_vertical = 2
 color = Color(1, 0.909804, 0.721569, 1)
 
 [node name="ProgressBar" type="ProgressBar" parent="Elements" index="1"]
+layout_mode = 0
 offset_top = -4.0
 offset_right = 32.0
 theme_override_styles/background = SubResource("StyleBoxFlat_s82co")

@@ -10,7 +10,9 @@ script = ExtResource("1_eywvj")
 [node name="Name" type="RichTextLabel" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 theme_override_fonts/normal_font = ExtResource("2_4sjlf")
+fit_content = true
 scroll_active = false
 
 [node name="Price" type="RichTextLabel" parent="."]

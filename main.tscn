@@ -492,21 +492,21 @@ target_position = Vector2(16, 2.08165e-12)
 [node name="ShopMenu" type="ColorRect" parent="ShopWindow"]
 visible = false
 z_index = 100
-offset_left = -64.0
+offset_left = -96.0
 offset_top = 16.0
-offset_right = 64.0
+offset_right = 96.0
 offset_bottom = 144.0
 color = Color(0.25, 0.5, 1, 0.8)
 script = ExtResource("7_c7px7")
 
 [node name="UpArrow" type="Sprite2D" parent="ShopWindow/ShopMenu"]
 visible = false
-position = Vector2(64, 5)
+position = Vector2(96, 5)
 texture = ExtResource("9_0pwnj")
 
 [node name="DownArrow" type="Sprite2D" parent="ShopWindow/ShopMenu"]
 visible = false
-position = Vector2(64, 123)
+position = Vector2(96, 123)
 rotation = 3.14159
 texture = ExtResource("9_0pwnj")
 

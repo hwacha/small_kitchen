@@ -17,6 +17,16 @@ var menu_items = []
 var frames_down = 0 # number of frames menu up is held
 var frames_up = 0 # number of frames menu down is held
 
+var items_sold = [
+	"Carrot",
+	"Tomato",
+	"Lettuce",
+	"Countertop",
+	"Bed",
+	"Microwave",
+#	"Salad"
+]
+
 func set_active(new_active):
 	active = new_active
 	visible = active
@@ -48,7 +58,7 @@ func get_input():
 		if Input.is_action_pressed("menu_down"):
 			frames_down += 1
 			if frames_down == 1 or (frames_down > 15 and frames_down % 5 == 1):
-				if selection_index < main.base_prices_by_item.size() - 1:
+				if selection_index < items_sold.size() - 1:
 					selection_index += 1
 		else:
 			frames_down = 0
@@ -93,7 +103,7 @@ func get_input():
 func _ready():
 	var menu_item_scene = preload("res://MenuItem.tscn")
 	var counter = 0
-	for i in main.base_prices_by_item:
+	for i in items_sold:
 		var menu_item = menu_item_scene.instantiate()
 		menu_item.get_node("Name").text = i
 		menu_item.get_node("Price").text = "[right]$" + str(main.base_prices_by_item[i]) + "[/right]"
