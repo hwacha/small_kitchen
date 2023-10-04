@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://hpy275p84xpi"]
+
+[ext_resource type="PackedScene" uid="uid://r3ge2m06csfb" path="res://Food.tscn" id="1_fg7lw"]
+[ext_resource type="Texture2D" uid="uid://bmk5o1vvlm6sl" path="res://assets/yummy food.png" id="2_mwp8p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lcyhp"]
+resource_local_to_scene = true
+atlas = ExtResource("2_mwp8p")
+region = Rect2(352, 96, 32, 32)
+
+[node name="Cheese" instance=ExtResource("1_fg7lw")]
+hunger = 25
+stamina = -5
+kind = "Cheese"
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_lcyhp")

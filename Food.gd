@@ -13,6 +13,7 @@ var consumed = false
 var t : float = 0
 
 func consume(player_position):
+	super.detach_from_combiner()
 	starting_position = position
 	ending_position = player_position
 	consumed = true

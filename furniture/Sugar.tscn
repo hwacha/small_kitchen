@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwogsvwxp5rq1"]
+
+[ext_resource type="PackedScene" uid="uid://r3ge2m06csfb" path="res://Food.tscn" id="1_jwfwr"]
+[ext_resource type="Texture2D" uid="uid://fy5wace3vxcb" path="res://assets/Pixel_House_Icons_1.2.1-32x.png" id="2_uvmm2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqau4"]
+resource_local_to_scene = true
+atlas = ExtResource("2_uvmm2")
+region = Rect2(256, 192, 32, 32)
+
+[node name="Sugar" instance=ExtResource("1_jwfwr")]
+stamina = 10
+kind = "Sugar"
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_xqau4")

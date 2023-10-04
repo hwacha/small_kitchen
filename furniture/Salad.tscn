@@ -9,9 +9,8 @@ atlas = ExtResource("2_jxra8")
 region = Rect2(96, 192, 32, 32)
 
 [node name="Salad" instance=ExtResource("1_70lbs")]
-hunger = 20
+hunger = 50
 stamina = 20
-contentment = 5
 kind = "Salad"
 
 [node name="Sprite2D" parent="." index="0"]

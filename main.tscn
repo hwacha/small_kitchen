@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://ba5ndpgaao44s"]
+[gd_scene load_steps=62 format=3 uid="uid://ba5ndpgaao44s"]
 
 [ext_resource type="Texture2D" uid="uid://8f67357ai5r4" path="res://assets/interior_32x.png" id="1_a7l0v"]
 [ext_resource type="Script" path="res://main.gd" id="1_yw3d0"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://cdqu3vn3al7mq" path="res://assets/back1.png" id="10_psn8r"]
 [ext_resource type="Script" path="res://ShopWindow.gd" id="11_233jq"]
 [ext_resource type="Script" path="res://TextDisplay.gd" id="18_60137"]
+[ext_resource type="Script" path="res://UseIndicator.gd" id="18_lblp7"]
 [ext_resource type="Script" path="res://BarDisplay.gd" id="19_hf8je"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_moawy"]
@@ -548,34 +549,43 @@ animation = &"walk_up"
 [node name="RayUp" type="RayCast2D" parent="Player/Rays/Up"]
 position = Vector2(0, -12)
 target_position = Vector2(2.08165e-12, -20)
+hit_from_inside = true
 
 [node name="Down" type="Node2D" parent="Player/Rays"]
 
 [node name="RayDown" type="RayCast2D" parent="Player/Rays/Down"]
 position = Vector2(0, 12)
 target_position = Vector2(2.08165e-12, 20)
+hit_from_inside = true
 
 [node name="Left" type="Node2D" parent="Player/Rays"]
 
 [node name="RayLeft" type="RayCast2D" parent="Player/Rays/Left"]
 position = Vector2(-12, 0)
 target_position = Vector2(-20, 2.08165e-12)
+hit_from_inside = true
 
 [node name="Right" type="Node2D" parent="Player/Rays"]
 
 [node name="RayRight" type="RayCast2D" parent="Player/Rays/Right"]
 position = Vector2(12, 0)
 target_position = Vector2(20, 2.08165e-12)
+hit_from_inside = true
 
 [node name="Arm" type="Node2D" parent="Player"]
-visible = false
 
 [node name="GrabIcon" type="AnimatedSprite2D" parent="Player/Arm"]
+visible = false
 z_index = 10
-position = Vector2(2.08165e-12, -24)
+position = Vector2(-4, -24)
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_og2dk")
 animation = &"open"
+
+[node name="UseIndicator" type="Node2D" parent="Player/Arm"]
+visible = false
+position = Vector2(7, -21)
+script = ExtResource("18_lblp7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource("RectangleShape2D_8t240")

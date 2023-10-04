@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwnw0ejb2wtcc"]
+
+[ext_resource type="PackedScene" uid="uid://r3ge2m06csfb" path="res://Food.tscn" id="1_uqnha"]
+[ext_resource type="Texture2D" uid="uid://8f67357ai5r4" path="res://assets/interior_32x.png" id="2_du0gx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pcvpt"]
+atlas = ExtResource("2_du0gx")
+region = Rect2(800, 320, 32, 32)
+
+[node name="Book" instance=ExtResource("1_uqnha")]
+contentment = 20
+kind = "Book"
+
+[node name="Sprite2D" parent="." index="0"]
+scale = Vector2(1.5, 1.5)
+texture = SubResource("AtlasTexture_pcvpt")

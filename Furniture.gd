@@ -23,6 +23,7 @@ func _ready():
 func _physics_process(delta):
 	velocity = Vector2(0, 0)
 	if target.is_equal_approx(position):
+		position = target
 		if destroy_on_stop:
 			var resale_value = int(0.8 * main.base_prices_by_item[kind])
 			main.money += resale_value
@@ -38,5 +39,15 @@ func _physics_process(delta):
 			diff_spot.add_child(diff_text)
 			queue_free()
 	else:
+		detach_from_combiner()
+			
 		velocity = position.direction_to(target) * BASE_MOVEMENT_SPEED * main.speed_multiplier
-	position += velocity * delta
+		position += velocity * delta
+
+func detach_from_combiner():
+	var furniture_on_board = get_node("/root/Main/Furniture")
+	if get_parent() != furniture_on_board:
+		position = get_parent().get_parent().get_parent().position + get_parent().position
+		target = position + target
+		get_parent().remove_child(self)
+		furniture_on_board.add_child(self)

@@ -15,6 +15,8 @@ var time_travelling : float = 0
 var waking_destination = null
 var covers = null
 
+var first_frame = true
+
 @onready var tilemap : TileMap = get_node("../TileMap")
 @onready var shop_menu = get_node("../ShopWindow/ShopMenu")
 @onready var main = get_node("/root/Main")
@@ -55,7 +57,11 @@ func try_move_furniture_piece(face_ray : RayCast2D, moved_furniture: Array[Furni
 		if self_object is Furniture and pushee is Combiner:
 			if pushee.try_add_ingredient(self_object):
 				return true
-			
+		
+		# pushing into a product
+		if self_object is Furniture and not pushee is ShopWindow and pushee.get_parent() != get_node("/root/Main/Furniture"):
+			self_object.target = self_object.position
+			return false
 		
 		# walking or pushing into a wall
 		if not pushee is Furniture:
@@ -114,9 +120,9 @@ func get_input():
 			covers.z_index = 0
 			covers = null
 			main.sleeping = false
-		main.suppress_diff_text = true
-		main.stamina += 0.2
-		main.suppress_diff_text = false
+			$Arm.visible = true
+			$Arm/GrabIcon.visible = false
+			$Arm/UseIndicator.visible = false
 		return
 		
 	var walked = false
@@ -134,18 +140,28 @@ func get_input():
 		walked = true
 
 	var face_ray : RayCast2D = get_node("Rays/" + facing_dir.capitalize()).get_child(0)
-	$Arm.visible = grabbing_dir != null or face_ray.is_colliding()
 	$Arm.rotation = angles_by_direction[grabbing_dir if grabbing_dir != null else facing_dir]
+	
+	$Arm/GrabIcon.visible = grabbing_dir != null or face_ray.is_colliding()
+	$Arm/UseIndicator.visible = false
 	$Arm/GrabIcon.animation = "open" if grabbing_dir == null else "closed"
 	if face_ray.is_colliding():
 		var furniture = face_ray.get_collider()
+		$Arm/UseIndicator.visible = grabbing_dir == null and \
+			(furniture is Food or \
+			furniture is ShopWindow or \
+			(furniture is Furniture and furniture.kind == "Bed") or \
+			(furniture is Combiner and \
+				furniture.completed_recipe != null and \
+				not furniture.cooking))
 		if furniture is Furniture:
 			if Input.is_action_just_pressed("grab"):
 				grabbing_dir = facing_dir
+
 		else:
-			$Arm.visible = false
+			$Arm/GrabIcon.visible = grabbing_dir != null
 		
-		if Input.is_action_just_pressed("use"):
+		if Input.is_action_just_pressed("use") and grabbing_dir == null:
 			if furniture is ShopWindow:
 				shop_menu.active = true
 				return
@@ -163,10 +179,11 @@ func get_input():
 				covers.z_index = 5
 				target = furniture.position + Vector2(0, 8)
 				main.sleeping = true
+				$Arm.visible = false
 	
-	if walked:
+	if walked and waking_destination == null:
 		var moved_furniture : Array[Furniture] = []
-		var should_abort_move : bool = false
+#		var should_abort_move : bool = false
 		if try_move_furniture_piece(face_ray, moved_furniture):
 			var sum = func(accum, furn):
 				return accum + furn.weight
@@ -176,10 +193,14 @@ func get_input():
 			main.suppress_diff_text = true
 			main.stamina -= total_weight / strength
 			main.suppress_diff_text = false
-		else:
-			should_abort_move = true
+#		else:
+#			should_abort_move = true
 
 func _physics_process(delta):
+	if first_frame:
+		first_frame = false
+		return
+
 	if shop_menu.active:
 		return
 		

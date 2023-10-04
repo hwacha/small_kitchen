@@ -12,13 +12,13 @@ enum DisplayType {
 @export var type : DisplayType
 
 const ascend_speed = 5
-var diff : int = 0 : set = set_diff
+var diff = 0 : set = set_diff
 
 func _ready():
 	$Lifetime.start()
 	
 func set_diff(new_diff):
-	diff = new_diff
+	diff = round(new_diff * 10) / 10
 	if type == DisplayType.MONEY:
 		if diff < 0:
 			$RichTextLabel.text = "-$" + str(abs(diff))

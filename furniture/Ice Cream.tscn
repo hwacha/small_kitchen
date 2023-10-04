@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://vngqpjtyyqs6"]
+
+[ext_resource type="PackedScene" uid="uid://r3ge2m06csfb" path="res://Food.tscn" id="1_y6xbh"]
+[ext_resource type="Texture2D" uid="uid://fy5wace3vxcb" path="res://assets/Pixel_House_Icons_1.2.1-32x.png" id="2_5rcgc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u1ige"]
+resource_local_to_scene = true
+atlas = ExtResource("2_5rcgc")
+region = Rect2(96, 32, 32, 32)
+
+[node name="Ice Cream" instance=ExtResource("1_y6xbh")]
+hunger = 10
+contentment = 50
+kind = "Ice Cream"
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_u1ige")

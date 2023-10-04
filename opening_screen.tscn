@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://db2acnqw8aeao"]
+
+[ext_resource type="Script" path="res://opening_screen.gd" id="1_8xjpt"]
+[ext_resource type="FontFile" uid="uid://b30l8rb5wm563" path="res://assets/PixelOperatorHB.ttf" id="1_j2xd2"]
+
+[node name="opening_screen" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_8xjpt")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_top = 100.0
+offset_right = 512.0
+offset_bottom = 140.0
+theme_override_fonts/normal_font = ExtResource("1_j2xd2")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[center]TOO MANY CARROTS IN THE KITCHEN[/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_top = 154.0
+offset_right = 512.0
+offset_bottom = 194.0
+theme_override_fonts/normal_font = ExtResource("1_j2xd2")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[center]Press Any Button To Continue[/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0

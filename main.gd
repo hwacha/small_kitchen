@@ -4,26 +4,33 @@ const base_prices_by_item = {
 	"Carrot": 5,
 	"Tomato": 4,
 	"Lettuce": 1,
+	"Salt": 8,
 	"Salad": 50,
-#	"Bread": 3,
-#	"Milk": 2,
+	"Bread": 7,
+	"Cheese": 60,
+	"Milk": 5,
+	"Sugar": 5,
+	"Ice Cream": 40,
 #	"Egg": 2,
 #	"Tomato": 5,
-#	"Pizza": 20,
-	"Microwave": 100,
+	"Pizza": 125,
+	"Book": 30,
+#	"Microwave": 100,
+	"Countertop": 150,
+	"Oven": 200,
+	"Freezer": 100,
 	"Bed": 120,
-	"Countertop": 150
 }
 
 const BASE_TIME_RATE : float = 0.1
 
-const BASE_MONEY       : int = 500
+const BASE_MONEY       : int = 800
 const BASE_HUNGER      : int = 200
 const BASE_STAMINA     : float = 200
 const BASE_CONTENTMENT : int = 200
 
 const RENT_TIME : float = 24
-const BASE_RENT : int   = 500
+const BASE_RENT : int   = 200
 
 var time : float = 0
 var rent : int   = BASE_RENT
@@ -66,12 +73,16 @@ func set_stamina(new_stamina):
 	stamina = min(new_stamina, max_stamina)
 	
 func set_contentment(new_contentment):
+	var diff = new_contentment - contentment
 	if not suppress_diff_text:
-		var diff = new_contentment - contentment
 		var diff_text = preload("res://DiffText.tscn").instantiate()
 		diff_text.type = DiffText.DisplayType.CONTENTMENT
 		diff_text.diff = diff
 		$Player/Diffs/ContentmentDiff.add_child(diff_text)
+
+	
+	if diff > 0:
+		time_contentment_last_replenished = 0
 
 	contentment = min(new_contentment, max_contentment)
 
@@ -101,13 +112,20 @@ func _ready():
 #	pass
 
 func _on_timer_timeout():
-	suppress_diff_text = true
-	if not sleeping:
+	var old_contentment = contentment
+	if sleeping:
+		stamina += 5
+	else:
+		suppress_diff_text = true
 		hunger -= 1
 		contentment -= max(int((time_contentment_last_replenished / 2) - 8), 0)
 		time_contentment_last_replenished += BASE_TIME_RATE
+		suppress_diff_text = false
+		
+	var new_contentment = contentment
 	
-	suppress_diff_text = false
+	$Contentment.modulate = Color.INDIAN_RED if new_contentment < old_contentment else Color.WHITE
+		
 	
 	time += BASE_TIME_RATE
 	

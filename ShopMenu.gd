@@ -23,10 +23,15 @@ var items_sold = [
 	"Carrot",
 	"Tomato",
 	"Lettuce",
+	"Bread",
+	"Salt",
+	"Milk",
+	"Sugar",
+	"Book",
 	"Countertop",
+	"Oven",
+	"Freezer",
 	"Bed",
-	"Microwave",
-#	"Salad"
 ]
 
 func set_active(new_active):

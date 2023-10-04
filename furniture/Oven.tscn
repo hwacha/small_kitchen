@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2hnjvmu08wrx"]
+
+[ext_resource type="PackedScene" uid="uid://dss482nueei0q" path="res://Combiner.tscn" id="1_j5oox"]
+[ext_resource type="Texture2D" uid="uid://8f67357ai5r4" path="res://assets/interior_32x.png" id="2_jnwtl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7qmxh"]
+atlas = ExtResource("2_jnwtl")
+region = Rect2(320, 0, 32, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oli1t"]
+size = Vector2(16, 48)
+
+[node name="Oven" instance=ExtResource("1_j5oox")]
+recipes = Array[Array]([[{
+"Bread": 1,
+"Cheese": 1,
+"Tomato": 1
+}, "Pizza", 15.0], [{
+"Milk": 1,
+"Salt": 1
+}, "Cheese", 20.0]])
+kind = "Oven"
+weight = 30.0
+height = 2
+
+[node name="Sprite2D" parent="." index="0"]
+position = Vector2(2.08165e-12, 16)
+texture = SubResource("AtlasTexture_7qmxh")
+
+[node name="Body" parent="." index="1"]
+position = Vector2(0, 17)
+shape = SubResource("RectangleShape2D_oli1t")
+
+[node name="RayCast2D" parent="Rays/Down" index="0"]
+position = Vector2(2.08165e-12, 44)
+
+[node name="RayCast2D2" type="RayCast2D" parent="Rays/Left" index="1"]
+position = Vector2(-12, 32)
+target_position = Vector2(-20, 2.08165e-12)
+
+[node name="RayCast2D3" type="RayCast2D" parent="Rays/Right" index="1"]
+position = Vector2(12, 32)
+target_position = Vector2(20, 2.08165e-12)
+
+[node name="Elements" parent="." index="3"]
+visible = false
+
+[node name="1" parent="SpawnPoints" index="0"]
+position = Vector2(0, 32)

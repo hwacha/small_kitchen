@@ -62,9 +62,7 @@ position = Vector2(-28, 2.08165e-12)
 position = Vector2(28, 2.08165e-12)
 
 [node name="ProgressBar" parent="Elements" index="1"]
-visible = false
 layout_mode = 1
-value = 0.0
 
 [node name="1" parent="SpawnPoints" index="0"]
 position = Vector2(-16, 2.08165e-12)

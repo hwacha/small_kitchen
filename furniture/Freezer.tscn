@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqwjae65e8yfw"]
+
+[ext_resource type="PackedScene" uid="uid://dss482nueei0q" path="res://Combiner.tscn" id="1_ipb3f"]
+[ext_resource type="Texture2D" uid="uid://8f67357ai5r4" path="res://assets/interior_32x.png" id="2_6l66b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg22t"]
+atlas = ExtResource("2_6l66b")
+region = Rect2(320, 160, 32, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fo5aa"]
+size = Vector2(16, 16)
+
+[node name="Freezer" instance=ExtResource("1_ipb3f")]
+recipes = Array[Array]([[{
+"Milk": 1,
+"Sugar": 1
+}, "Ice Cream", 8.0]])
+kind = "Freezer"
+
+[node name="Sprite2D2" type="Sprite2D" parent="." index="0"]
+
+[node name="Sprite2D" parent="." index="1"]
+position = Vector2(2.08165e-12, -7)
+scale = Vector2(1, 0.65625)
+texture = SubResource("AtlasTexture_dg22t")
+region_filter_clip_enabled = true
+
+[node name="Body" parent="." index="2"]
+shape = SubResource("RectangleShape2D_fo5aa")
