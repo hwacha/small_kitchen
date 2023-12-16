@@ -3,6 +3,7 @@ class_name Player
 
 const TILE_SIZE = 32
 const BASE_MOVEMENT_SPEED : float = TILE_SIZE * 6
+var USE_FOOD_DELAY_THRESHOLD : float = 0.333 # seconds
 
 var facing_dir = "down"
 var grabbing_dir = null
@@ -16,6 +17,9 @@ var waking_destination = null
 var covers = null
 
 var first_frame = true
+
+var use_hold_time  : float = 0
+var furniture_to_be_used : Furniture = null
 
 @onready var tilemap : TileMap = get_node("../TileMap")
 @onready var shop_menu = get_node("../ShopWindow/ShopMenu")
@@ -112,7 +116,7 @@ func try_move_furniture_piece(face_ray : RayCast2D, moved_furniture: Array[Furni
 			moved_furniture.push_front(self_object)
 		return true
 
-func get_input():
+func get_input(delta):
 	if waking_destination != null:
 		if Input.is_action_just_pressed("use"):
 			target = waking_destination
@@ -145,6 +149,8 @@ func get_input():
 	$Arm/GrabIcon.visible = grabbing_dir != null or face_ray.is_colliding()
 	$Arm/UseIndicator.visible = false
 	$Arm/GrabIcon.animation = "open" if grabbing_dir == null else "closed"
+	$Arm/UseIndicator.t = use_hold_time / USE_FOOD_DELAY_THRESHOLD
+	
 	if face_ray.is_colliding():
 		var furniture = face_ray.get_collider()
 		$Arm/UseIndicator.visible = grabbing_dir == null and \
@@ -165,11 +171,7 @@ func get_input():
 			if furniture is ShopWindow:
 				shop_menu.active = true
 				return
-			elif furniture is Food:
-				main.hunger      += furniture.hunger
-				main.stamina     += furniture.stamina
-				main.contentment += furniture.contentment
-				furniture.consume(position)
+
 			elif furniture is Combiner:
 				if furniture.completed_recipe != null:
 					furniture.start_cooking()
@@ -180,7 +182,26 @@ func get_input():
 				target = furniture.position + Vector2(0, 8)
 				main.sleeping = true
 				$Arm.visible = false
+		
+		if Input.is_action_pressed("use") and furniture != null and furniture is Furniture:
+			if furniture != furniture_to_be_used or (furniture is Food) and furniture.consumed:
+				use_hold_time = 0
+
+			use_hold_time += delta
+			furniture_to_be_used = furniture
+		
+		if use_hold_time >= USE_FOOD_DELAY_THRESHOLD and furniture is Food:
+			use_hold_time = 0
+			main.hunger      += furniture.hunger
+			main.stamina     += furniture.stamina
+			main.contentment += furniture.contentment
+			furniture.consume(position)
+	else:
+		use_hold_time = 0
 	
+	if Input.is_action_just_released("use"):
+		use_hold_time = 0
+		
 	if walked and waking_destination == null:
 		var moved_furniture : Array[Furniture] = []
 #		var should_abort_move : bool = false
@@ -223,7 +244,7 @@ func _physics_process(delta):
 	accepting_input = self.position.is_equal_approx(target)
 	if accepting_input:
 		time_travelling = 0
-		get_input()
+		get_input(delta)
 	else:
 		velocity = self.position.direction_to(target) * speed
 		position += velocity * delta
