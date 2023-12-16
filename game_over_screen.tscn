@@ -45,7 +45,7 @@ offset_right = 176.0
 offset_bottom = 272.0
 theme_override_fonts/normal_font = ExtResource("1_24icm")
 theme_override_font_sizes/normal_font_size = 16
-text = "Press Z to restart"
+text = "Press X to restart"
 fit_content = true
 scroll_active = false
 
